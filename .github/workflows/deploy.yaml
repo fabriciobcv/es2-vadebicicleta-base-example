@@ -15,11 +15,11 @@ jobs:
 
   sonar_scan:
     runs-on: ubuntu-latest
-      steps:
-          - name: Sonar scan
-            run: |
-              echo "Running sonar"
-              echo "Done!"
+    steps:
+      - name: Sonar scan
+        run: |
+          echo "Running sonar"
+          echo "Done!"
 
   terraform_apply:
     runs-on: ubuntu-latest
