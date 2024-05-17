@@ -17,11 +17,23 @@ jobs:
     if: ${{ github.event.inputs.job == 'build' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Build
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Build
+        uses: docker/setup-buildx-action@v2
+
+      - name: Docker login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build app
         run: |
           echo "Running docker build..."
-          echo "Running docker push image..."
-          echo "Done!"
+          docker build -t ${{ vars.REPO_URL }}:lastest
+          docker push ${{ vars.REPO_URL }}:lastest
 
   apply:
     if: ${{ github.event.inputs.job == 'apply' }}
