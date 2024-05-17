@@ -10,25 +10,25 @@ on:
         type: choice
         options:
           - build
-          - deploy
+          - apply
           - destroy
-
+          - deploy
 jobs:
   build:
     if: ${{ github.event.inputs.job == 'build' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy
+      - name: Build
         run: |
           echo "Running docker build..."
           echo "Running docker push image..."
           echo "Done!"
 
-  deploy:
-    if: ${{ github.event.inputs.job == 'deploy' }}
+  apply:
+    if: ${{ github.event.inputs.job == 'apply' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy
+      - name: Terraform apply
         run: |
           echo "Running terraform plan..."
           echo "Running terraform apply..."
@@ -38,8 +38,13 @@ jobs:
     if: ${{ github.event.inputs.job == 'destroy' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Destroy
+      - name: Terraform destroy
         run: |
           echo "Running terraform plan..."
           echo "Running terraform destroy..."
           echo "Done!"
+
+  deploy:
+    if: ${{ github.event.inputs.job == 'deploy' }}
+    runs-on: ubuntu-latest
+    needs: [ build, apply, destroy ]
