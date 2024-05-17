@@ -1,4 +1,4 @@
-name: ManualJobs
+name: Manual steps
 
 on:
   workflow_dispatch:
