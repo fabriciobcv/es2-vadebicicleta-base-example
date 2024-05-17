@@ -48,3 +48,6 @@ jobs:
     if: ${{ github.event.inputs.job == 'deploy' }}
     runs-on: ubuntu-latest
     needs: [ build, apply, destroy ]
+    steps:
+      - name: Deploy
+        run: echo "Running all jobs for deploy"
