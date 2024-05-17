@@ -2,12 +2,44 @@ name: Pipeline
 
 on:
   workflow_dispatch:
+    inputs:
+      job:
+        description: "Select step to run"
+        required: true
+        default: 'build'
+        type: choice
+        options:
+          - build
+          - deploy
+          - destroy
 
 jobs:
-  hello_world:
+  build:
+    if: ${{ github.event.inputs.job == 'build' }}
     runs-on: ubuntu-latest
     steps:
-      - name: testing workflow
+      - name: Deploy
         run: |
-          echo "Test 1"
-          echo "Test 2"
+          echo "Running docker build..."
+          echo "Running docker push image..."
+          echo "Done!"
+
+  deploy:
+    if: ${{ github.event.inputs.job == 'deploy' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: |
+          echo "Running terraform plan..."
+          echo "Running terraform apply..."
+          echo "Done!"
+
+  destroy:
+    if: ${{ github.event.inputs.job == 'destroy' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Destroy
+        run: |
+          echo "Running terraform plan..."
+          echo "Running terraform destroy..."
+          echo "Done!"
