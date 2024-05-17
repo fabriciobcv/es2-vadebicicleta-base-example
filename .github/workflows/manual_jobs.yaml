@@ -32,7 +32,7 @@ jobs:
       - name: Build app
         run: |
           echo "Running docker build..."
-          docker build -t ${{ vars.REPO_URL }}:lastest
+          docker build -t ${{ vars.REPO_URL }}:lastest .
           docker push ${{ vars.REPO_URL }}:lastest
 
   apply:
