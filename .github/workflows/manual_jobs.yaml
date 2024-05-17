@@ -1,4 +1,4 @@
-name: Pipeline
+name: ManualJobs
 
 on:
   workflow_dispatch:
@@ -12,7 +12,6 @@ on:
           - build
           - apply
           - destroy
-          - deploy
 jobs:
   build:
     if: ${{ github.event.inputs.job == 'build' }}
@@ -43,11 +42,3 @@ jobs:
           echo "Running terraform plan..."
           echo "Running terraform destroy..."
           echo "Done!"
-
-  deploy:
-    if: ${{ github.event.inputs.job == 'deploy' }}
-    runs-on: ubuntu-latest
-    needs: [ build, apply, destroy ]
-    steps:
-      - name: Deploy
-        run: echo "Running all jobs for deploy"
