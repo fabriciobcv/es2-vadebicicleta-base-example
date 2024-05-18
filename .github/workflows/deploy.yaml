@@ -10,6 +10,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven
+
       - name: SonarCloud scan
         uses: sonarsource/sonarcloud-github-action@master
         env: 
