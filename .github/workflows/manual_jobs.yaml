@@ -9,10 +9,23 @@ on:
         default: 'build'
         type: choice
         options:
+          - sonar-scan
           - build
           - apply
           - destroy
 jobs:
+  sonar_scan: 
+    if: ${{ github.event.inputs.job == 'sonar-scan' }}
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SonarCloud scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env: 
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
   build:
     if: ${{ github.event.inputs.job == 'build' }}
     runs-on: ubuntu-latest
