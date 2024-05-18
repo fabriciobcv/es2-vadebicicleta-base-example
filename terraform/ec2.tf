@@ -30,7 +30,7 @@ resource "aws_vpc_security_group_egress_rule" "egress_rule" {
   ip_protocol       = "-1" 
 }
 
-resource "aws_launch_template" "example_app" {
+resource "aws_launch_template" "example_app_lt" {
   name = local.app_name
   image_id = data.aws_ami.amzn-linux-2023-ami.id
   instance_type = local.instace_type
@@ -41,5 +41,11 @@ resource "aws_launch_template" "example_app" {
     DOCKER_USERNAME = var.DOCKER_USERNAME
     DOCKER_PASSWORD = var.DOCKER_PASSWORD
   }))
+}
+
+resource "aws_instance" "example_app" {
+  launch_template {
+    id = aws_launch_template.example_app_lt.id
+  }
 }
 
