@@ -1,4 +1,4 @@
-name: Manual steps
+name: Manual
 
 on:
   workflow_dispatch:
