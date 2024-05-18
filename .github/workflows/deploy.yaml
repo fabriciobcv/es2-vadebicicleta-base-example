@@ -70,7 +70,7 @@ jobs:
       - name: Terraform apply
         run: |
           COMMIT=$(echo "${GITHUB_SHA::8}")
-          TF_VAR_commit=$(echo "$COMMIT") 
+          export TF_VAR_commit=$(echo "$COMMIT") 
           cd terraform/
           terraform init
           terraform plan

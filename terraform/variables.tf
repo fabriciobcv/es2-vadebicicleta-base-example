@@ -9,6 +9,7 @@ locals{
   device_name = "/dev/sdf"
   vol_size = 20
   commit = var.commit
+  app_image_url = "fabriciobcv/es2-grupoc-vadebicicleta-base-example"
   docker_username = var.DOCKER_USERNAME
   docker_password = var.DOCKER_PASSWORD
 }

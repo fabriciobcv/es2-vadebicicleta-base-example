@@ -40,6 +40,7 @@ resource "aws_launch_template" "example_app_lt" {
   user_data = base64encode(templatefile("files/install-and-run-docker.sh.tpl", {
     DOCKER_USERNAME = local.docker_username
     DOCKER_PASSWORD = local.docker_password
+    APP_IMAGE_URL = local.app_image_url
     COMMIT = local.commit
   }))
 }
@@ -50,4 +51,8 @@ resource "aws_instance" "example_app" {
     id = aws_launch_template.example_app_lt.id
   }
 }
+
+output "app_dns" { value = aws_instace.example_app.public_dns }
+output "app_ip" { value = aws_instace.example_app.public_ip }
+output "app_image" { value = "${local.app_image_url}:${local.commit}"}
 
