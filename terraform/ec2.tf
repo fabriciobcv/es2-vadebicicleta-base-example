@@ -50,6 +50,10 @@ resource "aws_instance" "example_app" {
   launch_template {
     id = aws_launch_template.example_app_lt.id
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 output "app_dns" { value = aws_instance.example_app.public_dns }
