@@ -1,5 +1,6 @@
 variable "DOCKER_USERNAME" {default = ""}
 variable "DOCKER_PASSWORD" {default = ""}
+variable "commit" {default = ""}
 
 locals{
   app_name = "example_app"
@@ -7,4 +8,7 @@ locals{
   instace_type = "t2.micro"
   device_name = "/dev/sdf"
   vol_size = 20
+  commit = var.commit
+  docker_username = var.DOCKER_USERNAME
+  docker_password = var.DOCKER_PASSWORD
 }

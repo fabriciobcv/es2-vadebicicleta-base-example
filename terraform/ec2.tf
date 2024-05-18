@@ -38,8 +38,9 @@ resource "aws_launch_template" "example_app_lt" {
   vpc_security_group_ids = [aws_security_group.example_sg.id]
 
   user_data = base64encode(templatefile("files/install-and-run-docker.sh.tpl", {
-    DOCKER_USERNAME = var.DOCKER_USERNAME
-    DOCKER_PASSWORD = var.DOCKER_PASSWORD
+    DOCKER_USERNAME = local.docker_username
+    DOCKER_PASSWORD = local.docker_password
+    COMMIT = local.commit
   }))
 }
 

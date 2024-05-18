@@ -45,8 +45,9 @@ jobs:
       - name: Build app
         run: |
           echo "Running docker build..."
-          docker build -t ${{ vars.REPO_URL }}:latest .
-          docker push ${{ vars.REPO_URL }}:latest
+          COMMIT=$(echo "${GITHUB_SHA::8}")
+          docker build -t ${{ vars.REPO_URL }}:$COMMIT .
+          docker push ${{ vars.REPO_URL }}:COMMIT
 
   apply:
     if: ${{ github.event.inputs.job == 'apply' }}
