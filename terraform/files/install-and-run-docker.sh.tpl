@@ -7,4 +7,4 @@ sudo chkconfig docker on
 
 echo "$DOCKER_PASSWORD" | sudo docker login -u "$DOCKER_USERNAME" --password-stdin
 
-sudo docksudo docker run -d -p 8080:8080 $APP_IMAGE_URL:$COMMIT
+sudo docker run -d -p 8080:8080 $APP_IMAGE_URL:$COMMIT
