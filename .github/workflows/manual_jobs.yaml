@@ -60,17 +60,33 @@ jobs:
           cd terraform/
           terraform init
           terraform plan
+          terraform apply -auto-approve
           echo "Done!"
 
   destroy:
     if: ${{ github.event.inputs.job == 'destroy' }}
     runs-on: ubuntu-latest
+    env:
+      TF_VAR_DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      TF_VAR_DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
       - name: Terraform destroy
         run: |
-          echo "Running terraform plan..."
-          echo "Running terraform destroy..."
+          cd terraform/
+          terraform init
+          terraform plan
+          terraform destroy -auto-approve
           echo "Done!"
