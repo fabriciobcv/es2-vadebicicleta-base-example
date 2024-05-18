@@ -44,6 +44,7 @@ resource "aws_launch_template" "example_app_lt" {
 }
 
 resource "aws_instance" "example_app" {
+  key_name = "ec2_access"
   launch_template {
     id = aws_launch_template.example_app_lt.id
   }
