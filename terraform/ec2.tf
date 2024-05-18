@@ -52,7 +52,7 @@ resource "aws_instance" "example_app" {
   }
 }
 
-output "app_dns" { value = aws_instace.example_app.public_dns }
-output "app_ip" { value = aws_instace.example_app.public_ip }
+output "app_dns" { value = aws_instance.example_app.public_dns }
+output "app_ip" { value = aws_instance.example_app.public_ip }
 output "app_image" { value = "${local.app_image_url}:${local.commit}"}
 
