@@ -9,26 +9,27 @@ jobs:
     steps: 
       - name: Checkout code
         uses: actions/checkout@v2
-      
-      - name: Set up JDK 11
+
+      - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
           java-version: '17'
-      
-      - name: Validate Maven configuration
-        run: mvn validate
+          distribution: 'adopt'
 
-      - name: Install dependencies and build
-        run: mvn clean install -DskipTests
+      - name: Cache Maven dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven
 
-      - name: Run SonarCloud Scan
+      - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-          -Dsonar.projectKey=vadebicicleta \
-          -Dsonar.organization=es2 \
-          -Dsonar.host.url=https://sonarcloud.io
+        run: mvn verify sonar:sonar \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.organization=fabriciobcv \
+          -Dsonar.projectKey=es2-vadebicicleta-base-example
 
   build:
     runs-on: ubuntu-latest
