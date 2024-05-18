@@ -13,16 +13,13 @@ on:
           - apply
           - destroy
 jobs:
-  setup:
+  build:
+    if: ${{ github.event.inputs.job == 'build' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-  build:
-    if: ${{ github.event.inputs.job == 'build' }}
-    runs-on: ubuntu-latest
-    steps:
       - name: Set up Docker Build
         uses: docker/setup-buildx-action@v2
 
@@ -46,6 +43,9 @@ jobs:
       TF_VAR_DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       TF_VAR_DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
       
@@ -66,6 +66,9 @@ jobs:
     if: ${{ github.event.inputs.job == 'destroy' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Terraform destroy
         run: |
           echo "Running terraform plan..."
