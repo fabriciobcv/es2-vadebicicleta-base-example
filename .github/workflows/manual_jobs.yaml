@@ -32,8 +32,8 @@ jobs:
       - name: Build app
         run: |
           echo "Running docker build..."
-          docker build -t ${{ vars.REPO_URL }}:lastest .
-          docker push ${{ vars.REPO_URL }}:lastest
+          docker build -t ${{ vars.REPO_URL }}:latest .
+          docker push ${{ vars.REPO_URL }}:latest
 
   apply:
     if: ${{ github.event.inputs.job == 'apply' }}
