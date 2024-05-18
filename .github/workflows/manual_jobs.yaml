@@ -58,6 +58,7 @@ jobs:
       - name: Terraform apply
         run: |
           cd terraform/
+          terraform init
           terraform plan
           echo "Done!"
 
