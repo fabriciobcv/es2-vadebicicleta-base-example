@@ -12,6 +12,7 @@ resource "aws_lb_target_group" "tg" {
   port        = local.app_port
   protocol    = "HTTP"
   vpc_id      = "vpc-0cd5ffeef05fb3327"
+  target_type = "ip"
 
 #   health_check {
 #     port = local.app_port
@@ -41,7 +42,8 @@ resource "aws_lb_listener_rule" "listener_rule" {
 
 resource "aws_lb_target_group_attachment" "tg_attachment" {
  target_group_arn = aws_lb_target_group.tg.arn
- target_id        = aws_instance.example_app.id
+ #target_id        = aws_instance.example_app.id
+ target_id        =  aws_instance.example_app.public_ip
  port             = local.app_port
 }
 
