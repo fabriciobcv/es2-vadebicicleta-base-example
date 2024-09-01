@@ -9,7 +9,6 @@ data "terraform_remote_state" "infra" {
 
 resource "aws_lb_target_group" "tg" {
   name        = "${local.app_name}-tg"
-  target_type = "ip"
   port        = local.app_port
   protocol    = "HTTP"
   vpc_id      = "vpc-0cd5ffeef05fb3327"
